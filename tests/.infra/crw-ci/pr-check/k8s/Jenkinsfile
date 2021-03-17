@@ -28,8 +28,8 @@ pipeline {
 
     parameters {
         booleanParam(name: 'cheSingleHost',
-               defaultValue: false,
-               description: 'Configuration Che server strategy')
+                defaultValue: false,
+                description: 'Configuration Che server strategy')
 
         string(name: 'cheImageRepo',
                 defaultValue: "quay.io/crw_pr/che-server",
@@ -46,7 +46,7 @@ pipeline {
         string(name: 'e2eTestToRun',
                 defaultValue: "test-happy-path",
                 description: 'TypeScript E2E test to run')
-        
+
         string(name: 'testWorkspaceDevfileUrl',
                 defaultValue: "",
                 description: 'URL of devfile of test workspace')
@@ -154,7 +154,7 @@ pipeline {
 
                 stage("Build Che including upstream projects") {
                     when {
-                        expression { 
+                        expression {
                             return buildChe.toString() == 'true' || (params['ghprbCommentBody'] && (params.ghprbCommentBody == 'null' || params.ghprbCommentBody.contains("--rebuild")))
                         }
                     }
@@ -218,7 +218,7 @@ pipeline {
         stage("Build and push che-server image") {
             when {
                 expression {
-                    return buildChe.toString() == 'true' || (params['ghprbCommentBody'] && (params.ghprbCommentBody == 'null' || params.ghprbCommentBody.contains("--rebuild"))) 
+                    return buildChe.toString() == 'true' || (params['ghprbCommentBody'] && (params.ghprbCommentBody == 'null' || params.ghprbCommentBody.contains("--rebuild")))
                 }
             }
 
@@ -377,7 +377,6 @@ EOL"""
                      docker run --shm-size=1g --net=host --ipc=host \\
                        -p 5920:5920 \\
                        -e TS_SELENIUM_BASE_URL=\${CHE_URL} \\
-                       -e TS_SELENIUM_LOG_LEVEL='DEBUG' \\
                        -e TS_SELENIUM_MULTIUSER="true" \\
                        -e TS_SELENIUM_USERNAME="admin" \\
                        -e TS_SELENIUM_PASSWORD="admin" \\
